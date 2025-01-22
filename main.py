@@ -40,40 +40,38 @@ def Tick(matrix, probability, state):
 
     for f, v in burning.items():
         raw = f.split(",")
-        rawCordinate = [int(raw[0]),int(raw[1])]
+        rawCordinate = [int(raw[0]), int(raw[1])]
         targetX = rawCordinate[0]
         targetY = rawCordinate[1]
-        hit = 0
 
         # upper tree
-        targetX = rawCordinate[0] - 1
-        hit = random.randint(1, 100)
-        if hit <= probability and matrix[targetX][targetY] == "*":
-            matrix[targetX][targetY] = "@"
+        if targetX - 1 >= 0:  # Check if within bounds
+            hit = random.randint(1, 100)
+            if hit <= probability and matrix[targetX - 1][targetY] == "*":
+                matrix[targetX - 1][targetY] = "@"
 
         # down tree
-        targetX = rawCordinate[0] + 1
-        hit = random.randint(1, 100)
-        if hit <= probability and matrix[targetX][targetY] == "*":
-            matrix[targetX][targetY] = "@"
-
-        targetX = rawCordinate[0]
+        if targetX + 1 < len(matrix):  # Check if within bounds
+            hit = random.randint(1, 100)
+            if hit <= probability and matrix[targetX + 1][targetY] == "*":
+                matrix[targetX + 1][targetY] = "@"
 
         # left tree
-        targetY = rawCordinate[1] - 1
-        hit = random.randint(1, 100)
-        if hit <= probability and matrix[targetX][targetY] == "*":
-            matrix[targetX][targetY] = "@"
+        if targetY - 1 >= 0:  # Check if within bounds
+            hit = random.randint(1, 100)
+            if hit <= probability and matrix[targetX][targetY - 1] == "*":
+                matrix[targetX][targetY - 1] = "@"
 
         # right tree
-        targetY = rawCordinate[1] + 1
-        hit = random.randint(1, 100)
-        if hit <= probability and matrix[targetX][targetY] == "*":
-            matrix[targetX][targetY] = "@"
+        if targetY + 1 < len(matrix[0]):  # Check if within bounds
+            hit = random.randint(1, 100)
+            if hit <= probability and matrix[targetX][targetY + 1] == "*":
+                matrix[targetX][targetY + 1] = "@"
 
+        # Mark the current cell as burned
         matrix[rawCordinate[0]][rawCordinate[1]] = "~"
 
-    return(matrix)
+    return matrix
 
 
 
